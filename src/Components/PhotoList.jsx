@@ -9,12 +9,15 @@ const PhotoList = (props) => {
 
     useEffect(() => {
         props.changeQuery(query); 
-    }); 
+    }, [query]); 
 
     const pathName = window.location.pathname.split('/')[1].toLowerCase();
 
     let photos; 
-    if (pathName === 'search' || pathName === 'cats' || pathName === 'dogs' || pathName === 'computers') {
+    if (pathName === 'search' || pathName === 'cats' || 
+        pathName === 'dogs' || pathName === 'computers' || 
+        pathName === 'sunsets' || pathName === 'sunset' ) {
+            
         const results = props.data; 
         if (results.length > 0) {
         photos = results.map(photo => 

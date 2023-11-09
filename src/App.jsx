@@ -45,7 +45,7 @@ function App() {
         (loading) ? <p>Loading...</p> 
         : 
           <Routes>
-            <Route path="/" element={<Navigate replace to={query} />}/>
+            <Route index element={<Navigate replace to={query} />}/>
             <Route path="/:query" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
             <Route path="/search/:query" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
             <Route path="*" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
