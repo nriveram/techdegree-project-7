@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Photo from './Photo';
 import NoPhotos from './NoPhotos';
+import NotFound from './NotFound';
 
 const PhotoList = (props) => {
+    let { query } = useParams(); 
 
-    const results = props.data; 
+    useEffect(() => {
+        props.changeQuery(query); 
+    }); 
+
+    const pathName = window.location.pathname.split('/')[1].toLowerCase();
+
     let photos; 
-    if (results.length > 0) {
+    if (pathName === 'search' || pathName === 'cats' || pathName === 'dogs' || pathName === 'computers') {
+        const results = props.data; 
+        if (results.length > 0) {
         photos = results.map(photo => 
             <Photo 
                 key={photo.id} 
@@ -14,10 +24,12 @@ const PhotoList = (props) => {
                 secret={photo.secret}
                 server={photo.server}
                 title={photo.title}
-            />
-        ); 
+            />); 
+        } else {
+            photos = <NoPhotos />
+        }
     } else {
-        photos = <NoPhotos />
+        photos = <NotFound />
     }
     return (
         <div className="photo-container">

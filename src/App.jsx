@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import apiKey from './config';
 import axios from "axios"
 import './App.css'; 
 import Search from './Components/Search';
 import Nav from './Components/Nav';
 import PhotoList from './Components/PhotoList';
+import NotFound from './Components/NotFound';
 
 
 function App() {
@@ -15,9 +16,8 @@ function App() {
 
   useEffect(() => {
     let activeFetch = true;
-    axios.get(`https://www.flickr.com/services/rest/?
-      method=flickr.photos.search&api_key=${apiKey}&tags=${query}
-      &per_page=24&format=json&nojsoncallback=1`)
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}
+        &per_page=24&format=json&nojsoncallback=1`)
         .then(response => {
           // handle success
           if (activeFetch) {
@@ -35,39 +35,26 @@ function App() {
 
   const handleQueryChange = searchText => {
     setQuery(searchText);
-  }
-
+  };
 
   return (
     <div className="container">
       <Search changeQuery={handleQueryChange}/>
       <Nav />
       {
-        (loading) 
-        ? 
-        <p>Loading...</p> 
+        (loading) ? <p>Loading...</p> 
         : 
-        <PhotoList data={photos}/>
+          <Routes>
+            <Route path="/" element={<Navigate replace to={query} />}/>
+            <Route path="/:query" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
+            <Route path="/search/:query" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
+            <Route path="*" element={<PhotoList data={photos} changeQuery={handleQueryChange}/>}/>
+          </Routes>
       }
 
     </div>
   ); 
   
 }
-      /*
-      <Search changeQuery={handleQueryChange} />
-      <Nav />
-      {
-          (loading)
-          ? <p>Loading...</p>
-          : 
-          <Routes>
-          <Route path="/" element={<Nav />} />
-          <Route path="cats" element={<PhotoList />} />
-          <Route path="dogs" element={<PhotoList />} />
-          <Route path="computers" element={<PhotoList />} />
-          <Route path="/search/:query" element={<PhotoList />}/>
-        </Routes>
-      }
-      */
+
 export default App
