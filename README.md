@@ -1,2 +1,2 @@
-# techdegree-project-7
- React image gallery app
+# Treehouse Project 7 
+Building a react gallery app
