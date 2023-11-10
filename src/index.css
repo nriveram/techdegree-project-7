@@ -2,6 +2,7 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
+  background-color: #F2D7D5 ;
 }
 
 h2 {
@@ -27,7 +28,7 @@ a {
 
 .search-form button {
   outline: none;
-  background-color: #438bbd;
+  background-color: #cf4075;
   border: none;
   padding: 0px 15px;
   border-radius: 0 0.35em 0.35em 0;
@@ -52,7 +53,7 @@ input {
 
 .main-nav a {
   display: block;
-  background: #438bbd;
+  background: #cf4075;
   border-radius: 3px;
   padding: 5px;
   color: #fff;
@@ -61,7 +62,7 @@ input {
 .main-nav .active,
 .main-nav a:hover,
 .search-form button:hover {
-  background-color: #275270;
+  background-color: #941544;
 }
 
 .photo-container ul {

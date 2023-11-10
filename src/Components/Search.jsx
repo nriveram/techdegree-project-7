@@ -5,11 +5,14 @@ const Search = (props) => {
     const searchText = useRef(null);
     let navigate = useNavigate();
 
+    // handles the searches submitted in the search bar 
     const handleSubmit = e => {
         e.preventDefault();
         props.changeQuery(searchText.current.value);
+        // sends user to a search path 
         let path = `search/${searchText.current.value}`;
-        navigate(path, { replace:true });
+        navigate(path);
+        // resets target after displaying images 
         e.currentTarget.reset();
     }
     return (

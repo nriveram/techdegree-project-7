@@ -5,21 +5,24 @@ import NoPhotos from './NoPhotos';
 import NotFound from './NotFound';
 
 const PhotoList = (props) => {
+    let photos; 
     let { query } = useParams(); 
-
-    useEffect(() => {
-        props.changeQuery(query); 
-    }, [query]); 
-
     const pathName = window.location.pathname.split('/')[1].toLowerCase();
 
-    let photos; 
+    useEffect(() => {
+        if (query) {
+        } else {
+            props.changeQuery(pathName); 
+        }
+    }, [query, pathName]); 
+
+    // checks for valid pathnames
     if (pathName === 'search' || pathName === 'cats' || 
         pathName === 'dogs' || pathName === 'computers' || 
-        pathName === 'sunsets' || pathName === 'sunset' ) {
-            
+        pathName === 'lilies') {
         const results = props.data; 
         if (results.length > 0) {
+        // maps through each photo and creates a photo component 
         photos = results.map(photo => 
             <Photo 
                 key={photo.id} 
@@ -29,9 +32,11 @@ const PhotoList = (props) => {
                 title={photo.title}
             />); 
         } else {
+            // displays if there are no searches 
             photos = <NoPhotos />
         }
     } else {
+        // displays if there was a n error to the path 
         photos = <NotFound />
     }
     return (
@@ -42,6 +47,7 @@ const PhotoList = (props) => {
             </ul>
         </div>
     );
+
 }
 
 export default PhotoList; 
